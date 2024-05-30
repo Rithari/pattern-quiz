@@ -72,8 +72,7 @@ public class Item {
     }
 }
 
-// StrategyDemo.java
-public class StrategyDemo {
+public class Demo {
     public static void main(String[] args) {
         ShoppingCart cart = new ShoppingCart();
 
