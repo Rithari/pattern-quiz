@@ -5,15 +5,15 @@ It randomly picks a pattern snippet from a collection of text files, displays it
 The application runs in a loop until you terminate it with `Ctrl+C`.
 
 Included pattern snippets are:
-Abstract Factory 2x
-Composite 2x
-Adapter 1x
-State 2x
-Strategy 2x
-Visitor 2x
-Observer 2x
-Decorator 2x
-Singleton 2x
+- Abstract Factory 2x
+- Composite 2x
+- Adapter 1x
+- State 2x
+- Strategy 2x
+- Visitor 2x
+- Observer 2x
+- Decorator 2x
+- Singleton 2x
 
 Feel free to merge request additional code snippets.
 
