@@ -1,0 +1,39 @@
+public interface CompressionAlgorithm {
+    public void compressFiles(ArrayList<File> files);
+}
+
+public class ZipCompressionAlgorithm implements CompressionAlgorithm {
+    public void compressFiles(ArrayList<File> files) {
+        // using ZIP algorithm
+    }
+}
+
+public class RarCompressionAlgorithm implements CompressionAlgorithm {
+    public void compressFiles(ArrayList<File> files) {
+        // using RAR algorithm
+    }
+}
+
+public class CompressionContext {
+    private CompressionAlgorithm algorithm;
+
+    // this can be set at runtime by the application preferences
+    public void setCompressionAlgorithm(CompressionAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public void createArchive(ArrayList<File> files) {
+        algorithm.compressFiles(files);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        CompressionContext ctx = new CompressionContext();
+        // we could assume context is already set by preferences
+        ctx.setCompressionAlgorithm(new ZipCompressionAlgorithm());
+        // get a list of files...
+        ArrayList<File> fileList = new ArrayList<>();
+        ctx.createArchive(fileList);
+    }
+}
