@@ -4,6 +4,17 @@ This is a simple Python application that quizzes you on different design pattern
 It randomly picks a pattern snippet from a collection of text files, displays it, and asks you to identify the pattern.
 The application runs in a loop until you terminate it with `Ctrl+C`.
 
+Only 9 GoF patterns are implemented:
+- Abstract Factory
+- Adapter
+- Composite
+- Decorator
+- Observer
+- Singleton
+- Strategy
+- State
+- Visitor
+  
 Feel free to merge request additional code snippets.
 
 
