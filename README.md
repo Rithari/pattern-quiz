@@ -12,7 +12,7 @@ The application runs in a loop until you terminate it with `Ctrl+C`.
 3. Run the application using the following command:
 
    ```sh
-   python quiz_app.py
+   python app.py
    ```
 
 ## How to Add More Patterns
