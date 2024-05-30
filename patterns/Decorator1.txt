@@ -1,0 +1,70 @@
+// Notification.java
+public interface Notification {
+    void send(String message);
+}
+
+// BasicNotification.java
+public class BasicNotification implements Notification {
+    @Override
+    public void send(String message) {
+        System.out.println("Sending basic notification: " + message);
+    }
+}
+
+// EmailNotification.java
+public class EmailNotification implements Notification {
+    private Notification wrapped;
+
+    public EmailNotification(Notification wrapped) {
+        this.wrapped = wrapped;
+    }
+
+    @Override
+    public void send(String message) {
+        wrapped.send(message);
+        System.out.println("Sending email notification: " + message);
+    }
+}
+
+// SMSNotification.java
+public class SMSNotification implements Notification {
+    private Notification wrapped;
+
+    public SMSNotification(Notification wrapped) {
+        this.wrapped = wrapped;
+    }
+
+    @Override
+    public void send(String message) {
+        wrapped.send(message);
+        System.out.println("Sending SMS notification: " + message);
+    }
+}
+
+// PushNotification.java
+public class PushNotification implements Notification {
+    private Notification wrapped;
+
+    public PushNotification(Notification wrapped) {
+        this.wrapped = wrapped;
+    }
+
+    @Override
+    public void send(String message) {
+        wrapped.send(message);
+        System.out.println("Sending push notification: " + message);
+    }
+}
+
+// NotificationDemo.java
+public class NotificationDemo {
+    public static void main(String[] args) {
+        Notification notification = new BasicNotification();
+
+        Notification emailNotification = new EmailNotification(notification);
+        Notification smsNotification = new SMSNotification(emailNotification);
+        Notification pushNotification = new PushNotification(smsNotification);
+
+        pushNotification.send("Hello World!");
+    }
+}

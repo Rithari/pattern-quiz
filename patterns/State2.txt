@@ -1,0 +1,60 @@
+// Mode.java
+public interface Mode {
+    void handleRequest();
+}
+
+// DayMode.java
+public class DayMode implements Mode {
+    @Override
+    public void handleRequest() {
+        System.out.println("Switching to Day Mode");
+    }
+}
+
+// NightMode.java
+public class NightMode implements Mode {
+    @Override
+    public void handleRequest() {
+        System.out.println("Switching to Night Mode");
+    }
+}
+
+// AirplaneMode.java
+public class AirplaneMode implements Mode {
+    @Override
+    public void handleRequest() {
+        System.out.println("Switching to Airplane Mode");
+    }
+}
+
+// Device.java
+public class Device {
+    private Mode currentMode;
+
+    public Device() {
+        this.currentMode = new DayMode(); // default mode
+    }
+
+    public void setMode(Mode mode) {
+        this.currentMode = mode;
+    }
+
+    public void pressButton() {
+        currentMode.handleRequest();
+    }
+}
+
+// MainApp.java
+public class MainApp {
+    public static void main(String[] args) {
+        Device device = new Device();
+
+        device.pressButton();
+
+        device.setMode(new NightMode());
+        device.pressButton();
+
+        device.setMode(new AirplaneMode());
+        device.pressButton();
+    }
+}

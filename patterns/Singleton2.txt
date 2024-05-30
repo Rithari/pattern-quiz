@@ -1,0 +1,42 @@
+// Configuration.java
+public class Configuration {
+    private static Configuration instance;
+    private String setting;
+
+    private Configuration() {
+        // Private constructor to prevent instantiation
+        this.setting = "Default Setting";
+    }
+
+    public static synchronized Configuration getInstance() {
+        if (instance == null) {
+            instance = new Configuration();
+        }
+        return instance;
+    }
+
+    public String getSetting() {
+        return setting;
+    }
+
+    public void setSetting(String setting) {
+        this.setting = setting;
+    }
+}
+
+// MainApp.java
+public class MainApp {
+    public static void main(String[] args) {
+        Configuration config1 = Configuration.getInstance();
+        System.out.println("Config1 Setting: " + config1.getSetting());
+
+        Configuration config2 = Configuration.getInstance();
+        config2.setSetting("Updated Setting");
+
+        System.out.println("Config1 Setting after update: " + config1.getSetting());
+        System.out.println("Config2 Setting: " + config2.getSetting());
+
+        // Verify that both config1 and config2 refer to the same instance
+        System.out.println("Are both instances the same? " + (config1 == config2));
+    }
+}

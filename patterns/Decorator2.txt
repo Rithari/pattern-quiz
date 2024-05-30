@@ -1,0 +1,108 @@
+// DataSource.java
+public interface DataSource {
+    void writeData(String data);
+    String readData();
+}
+
+// FileDataSource.java
+public class FileDataSource implements DataSource {
+    private String filename;
+
+    public FileDataSource(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
+    public void writeData(String data) {
+        System.out.println("Writing data to file: " + data);
+    }
+
+    @Override
+    public String readData() {
+        return "Reading data from file";
+    }
+}
+
+// DataSourceWrapper.java
+public class DataSourceWrapper implements DataSource {
+    private DataSource wrappee;
+
+    public DataSourceWrapper(DataSource source) {
+        this.wrappee = source;
+    }
+
+    @Override
+    public void writeData(String data) {
+        wrappee.writeData(data);
+    }
+
+    @Override
+    public String readData() {
+        return wrappee.readData();
+    }
+}
+
+// Encryption.java
+public class Encryption extends DataSourceWrapper {
+    public Encryption(DataSource source) {
+        super(source);
+    }
+
+    @Override
+    public void writeData(String data) {
+        super.writeData(encrypt(data));
+    }
+
+    @Override
+    public String readData() {
+        return decrypt(super.readData());
+    }
+
+    private String encrypt(String data) {
+        return "Encrypted(" + data + ")";
+    }
+
+    private String decrypt(String data) {
+        return "Decrypted(" + data + ")";
+    }
+}
+
+// Compression.java
+public class Compression extends DataSourceWrapper {
+    public Compression(DataSource source) {
+        super(source);
+    }
+
+    @Override
+    public void writeData(String data) {
+        super.writeData(compress(data));
+    }
+
+    @Override
+    public String readData() {
+        return decompress(super.readData());
+    }
+
+    private String compress(String data) {
+        return "Compressed(" + data + ")";
+    }
+
+    private String decompress(String data) {
+        return "Decompressed(" + data + ")";
+    }
+}
+
+// Demo.java
+public class Demo {
+    public static void main(String[] args) {
+        DataSource fileDataSource = new FileDataSource("data.txt");
+
+        DataSource encryptedDataSource = new Encryption(fileDataSource);
+        DataSource compressedDataSource = new Compression(encryptedDataSource);
+
+        compressedDataSource.writeData("Hello, World!");
+        String result = compressedDataSource.readData();
+
+        System.out.println(result);
+    }
+}

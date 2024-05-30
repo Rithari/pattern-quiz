@@ -1,0 +1,99 @@
+/ Button.java
+public interface Button {
+    void render();
+}
+
+// Checkbox.java
+public interface Checkbox {
+    void select();
+}
+
+// MacOSButton.java
+public class MacOSButton implements Button {
+    @Override
+    public void render() {
+        System.out.println("Rendering a MacOS Button");
+    }
+}
+
+// WindowsButton.java
+public class WindowsButton implements Button {
+    @Override
+    public void render() {
+        System.out.println("Rendering a Windows Button");
+    }
+}
+
+// MacOSCheckbox.java
+public class MacOSCheckbox implements Checkbox {
+    @Override
+    public void select() {
+        System.out.println("Selecting a MacOS Checkbox");
+    }
+}
+
+// WindowsCheckbox.java
+public class WindowsCheckbox implements Checkbox {
+    @Override
+    public void select() {
+        System.out.println("Selecting a Windows Checkbox");
+    }
+}
+
+// UIElementCreator.java
+public interface UIElementCreator {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+// MacOSUIElementCreator.java
+public class MacOSUIElementCreator implements UIElementCreator {
+    @Override
+    public Button createButton() {
+        return new MacOSButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new MacOSCheckbox();
+    }
+}
+
+// WindowsUIElementCreator.java
+public class WindowsUIElementCreator implements UIElementCreator {
+    @Override
+    public Button createButton() {
+        return new WindowsButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new WindowsCheckbox();
+    }
+}
+
+// Application.java
+public class Application {
+    private Button button;
+    private Checkbox checkbox;
+
+    public Application(UIElementCreator creator) {
+        button = creator.createButton();
+        checkbox = creator.createCheckbox();
+    }
+
+    public void renderUI() {
+        button.render();
+        checkbox.select();
+    }
+
+    public static void main(String[] args) {
+        UIElementCreator macCreator = new MacOSUIElementCreator();
+        Application macApp = new Application(macCreator);
+        macApp.renderUI();
+
+        UIElementCreator winCreator = new WindowsUIElementCreator();
+        Application winApp = new Application(winCreator);
+        winApp.renderUI();
+    }
+}

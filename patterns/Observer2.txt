@@ -1,0 +1,67 @@
+// EventSource.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class EventSource {
+    private List<Listener> listeners = new ArrayList<>();
+    private String state;
+
+    public void register(Listener listener) {
+        listeners.add(listener);
+    }
+
+    public void unregister(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    public void setState(String state) {
+        this.state = state;
+        notifyListeners();
+    }
+
+    private void notifyListeners() {
+        for (Listener listener : listeners) {
+            listener.update(state);
+        }
+    }
+}
+
+// Listener.java
+public interface Listener {
+    void update(String state);
+}
+
+// ConsoleListener.java
+public class ConsoleListener implements Listener {
+    @Override
+    public void update(String state) {
+        System.out.println("Console received: " + state);
+    }
+}
+
+// FileListener.java
+public class FileListener implements Listener {
+    @Override
+    public void update(String state) {
+        System.out.println("File received: " + state);
+    }
+}
+
+// EventDemo.java
+public class EventDemo {
+    public static void main(String[] args) {
+        EventSource eventSource = new EventSource();
+
+        Listener consoleListener = new ConsoleListener();
+        Listener fileListener = new FileListener();
+
+        eventSource.register(consoleListener);
+        eventSource.register(fileListener);
+
+        eventSource.setState("Event 1 occurred");
+        eventSource.setState("Event 2 occurred");
+
+        eventSource.unregister(consoleListener);
+        eventSource.setState("Event 3 occurred");
+    }
+}

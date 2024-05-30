@@ -1,0 +1,33 @@
+// Logger.java
+public class Logger {
+    private static Logger instance;
+
+    private Logger() {
+        // Private constructor to prevent instantiation
+    }
+
+    public static synchronized Logger getInstance() {
+        if (instance == null) {
+            instance = new Logger();
+        }
+        return instance;
+    }
+
+    public void log(String message) {
+        System.out.println("Log entry: " + message);
+    }
+}
+
+// AppLoggerDemo.java
+public class AppLoggerDemo {
+    public static void main(String[] args) {
+        Logger logger1 = Logger.getInstance();
+        logger1.log("First log message");
+
+        Logger logger2 = Logger.getInstance();
+        logger2.log("Second log message");
+
+        // Verify that both logger1 and logger2 refer to the same instance
+        System.out.println("Are both instances the same? " + (logger1 == logger2));
+    }
+}

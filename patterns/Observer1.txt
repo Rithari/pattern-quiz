@@ -1,0 +1,67 @@
+// WeatherStation.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class WeatherStation {
+    private List<Display> displays = new ArrayList<>();
+    private String weather;
+
+    public void addDisplay(Display display) {
+        displays.add(display);
+    }
+
+    public void removeDisplay(Display display) {
+        displays.remove(display);
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+        updateDisplays();
+    }
+
+    private void updateDisplays() {
+        for (Display display : displays) {
+            display.show(weather);
+        }
+    }
+}
+
+// Display.java
+public interface Display {
+    void show(String weather);
+}
+
+// PhoneDisplay.java
+public class PhoneDisplay implements Display {
+    @Override
+    public void show(String weather) {
+        System.out.println("Phone display shows: " + weather);
+    }
+}
+
+// TVDisplay.java
+public class TVDisplay implements Display {
+    @Override
+    public void show(String weather) {
+        System.out.println("TV display shows: " + weather);
+    }
+}
+
+// WeatherDemo.java
+public class WeatherDemo {
+    public static void main(String[] args) {
+        WeatherStation station = new WeatherStation();
+
+        Display phoneDisplay = new PhoneDisplay();
+        Display tvDisplay = new TVDisplay();
+
+        station.addDisplay(phoneDisplay);
+        station.addDisplay(tvDisplay);
+
+        station.setWeather("Sunny");
+        station.setWeather("Rainy");
+
+        station.removeDisplay(phoneDisplay);
+        station.setWeather("Cloudy");
+    }
+}

@@ -1,0 +1,81 @@
+// Item.java
+public interface Item {
+    void accept(Processor processor);
+}
+
+// Book.java
+public class Book implements Item {
+    @Override
+    public void accept(Processor processor) {
+        processor.process(this);
+    }
+
+    public String getTitle() {
+        return "A Great Book";
+    }
+}
+
+// Fruit.java
+public class Fruit implements Item {
+    @Override
+    public void accept(Processor processor) {
+        processor.process(this);
+    }
+
+    public String getName() {
+        return "Apple";
+    }
+
+    public double getPrice() {
+        return 1.0;
+    }
+}
+
+// Processor.java
+public interface Processor {
+    void process(Book book);
+    void process(Fruit fruit);
+}
+
+// TaxProcessor.java
+public class TaxProcessor implements Processor {
+    @Override
+    public void process(Book book) {
+        System.out.println("Calculating tax for book: " + book.getTitle());
+    }
+
+    @Override
+    public void process(Fruit fruit) {
+        System.out.println("Calculating tax for fruit: " + fruit.getName() + " with price " + fruit.getPrice());
+    }
+}
+
+// DiscountProcessor.java
+public class DiscountProcessor implements Processor {
+    @Override
+    public void process(Book book) {
+        System.out.println("Calculating discount for book: " + book.getTitle());
+    }
+
+    @Override
+    public void process(Fruit fruit) {
+        System.out.println("Calculating discount for fruit: " + fruit.getName() + " with price " + fruit.getPrice());
+    }
+}
+
+
+public class Demo {
+    public static void main(String[] args) {
+        Item book = new Book();
+        Item fruit = new Fruit();
+
+        Processor taxProcessor = new TaxProcessor();
+        Processor discountProcessor = new DiscountProcessor();
+
+        book.accept(taxProcessor);
+        book.accept(discountProcessor);
+
+        fruit.accept(taxProcessor);
+        fruit.accept(discountProcessor);
+    }
+}

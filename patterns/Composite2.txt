@@ -1,0 +1,67 @@
+// Graphic.java
+public interface Graphic {
+    void draw();
+}
+
+// Line.java
+public class Line implements Graphic {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Line");
+    }
+}
+
+// Rectangle.java
+public class Rectangle implements Graphic {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Rectangle");
+    }
+}
+
+// Picture.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Picture implements Graphic {
+    private List<Graphic> graphics = new ArrayList<>();
+
+    public void add(Graphic graphic) {
+        graphics.add(graphic);
+    }
+
+    public void remove(Graphic graphic) {
+        graphics.remove(graphic);
+    }
+
+    @Override
+    public void draw() {
+        for (Graphic graphic : graphics) {
+            graphic.draw();
+        }
+    }
+}
+
+// MainApp.java
+public class MainApp {
+    public static void main(String[] args) {
+        Graphic line1 = new Line();
+        Graphic line2 = new Line();
+        Graphic rectangle = new Rectangle();
+
+        Picture picture = new Picture();
+        picture.add(line1);
+        picture.add(line2);
+        picture.add(rectangle);
+
+        Picture complexPicture = new Picture();
+        complexPicture.add(picture);
+        complexPicture.add(new Line());
+
+        System.out.println("Drawing a simple picture:");
+        picture.draw();
+
+        System.out.println("Drawing a complex picture:");
+        complexPicture.draw();
+    }
+}

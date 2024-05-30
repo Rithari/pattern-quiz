@@ -1,0 +1,64 @@
+// Component.java
+public interface Component {
+    void display();
+}
+
+// Item.java
+public class Item implements Component {
+    private String name;
+
+    public Item(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Item: " + name);
+    }
+}
+
+// Group.java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Group implements Component {
+    private List<Component> components = new ArrayList<>();
+
+    public void add(Component component) {
+        components.add(component);
+    }
+
+    public void remove(Component component) {
+        components.remove(component);
+    }
+
+    @Override
+    public void display() {
+        for (Component component : components) {
+            component.display();
+        }
+    }
+}
+
+// Application.java
+public class Application {
+    public static void main(String[] args) {
+        Component item1 = new Item("Item 1");
+        Component item2 = new Item("Item 2");
+        Component item3 = new Item("Item 3");
+
+        Group group1 = new Group();
+        group1.add(item1);
+        group1.add(item2);
+
+        Group group2 = new Group();
+        group2.add(group1);
+        group2.add(item3);
+
+        System.out.println("Displaying group1:");
+        group1.display();
+
+        System.out.println("Displaying group2:");
+        group2.display();
+    }
+}

@@ -1,0 +1,77 @@
+// Shape.java
+public interface Shape {
+    void apply(Operation operation);
+}
+
+// Circle.java
+public class Circle implements Shape {
+    @Override
+    public void apply(Operation operation) {
+        operation.perform(this);
+    }
+
+    public String draw() {
+        return "Drawing a Circle";
+    }
+}
+
+// Rectangle.java
+public class Rectangle implements Shape {
+    @Override
+    public void apply(Operation operation) {
+        operation.perform(this);
+    }
+
+    public String draw() {
+        return "Drawing a Rectangle";
+    }
+}
+
+// Operation.java
+public interface Operation {
+    void perform(Circle circle);
+    void perform(Rectangle rectangle);
+}
+
+// RenderOperation.java
+public class RenderOperation implements Operation {
+    @Override
+    public void perform(Circle circle) {
+        System.out.println("Rendering: " + circle.draw());
+    }
+
+    @Override
+    public void perform(Rectangle rectangle) {
+        System.out.println("Rendering: " + rectangle.draw());
+    }
+}
+
+// ExportOperation.java
+public class ExportOperation implements Operation {
+    @Override
+    public void perform(Circle circle) {
+        System.out.println("Exporting: " + circle.draw());
+    }
+
+    @Override
+    public void perform(Rectangle rectangle) {
+        System.out.println("Exporting: " + rectangle.draw());
+    }
+}
+
+
+public class Demo {
+    public static void main(String[] args) {
+        Shape circle = new Circle();
+        Shape rectangle = new Rectangle();
+
+        Operation renderOperation = new RenderOperation();
+        Operation exportOperation = new ExportOperation();
+
+        circle.apply(renderOperation);
+        circle.apply(exportOperation);
+
+        rectangle.apply(renderOperation);
+        rectangle.apply(exportOperation);
+    }
+}

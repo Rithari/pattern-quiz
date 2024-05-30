@@ -1,0 +1,84 @@
+// SortAlgorithm.java
+public interface SortAlgorithm {
+    void sort(int[] numbers);
+}
+
+// BubbleSort.java
+public class BubbleSort implements SortAlgorithm {
+    @Override
+    public void sort(int[] numbers) {
+        int n = numbers.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (numbers[j] > numbers[j + 1]) {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
+            }
+        }
+        System.out.println("Sorted using Bubble Sort");
+    }
+}
+
+// QuickSort.java
+public class QuickSort implements SortAlgorithm {
+    @Override
+    public void sort(int[] numbers) {
+        quickSort(numbers, 0, numbers.length - 1);
+        System.out.println("Sorted using Quick Sort");
+    }
+
+    private void quickSort(int[] numbers, int low, int high) {
+        if (low < high) {
+            int pi = partition(numbers, low, high);
+            quickSort(numbers, low, pi - 1);
+            quickSort(numbers, pi + 1, high);
+        }
+    }
+
+    private int partition(int[] numbers, int low, int high) {
+        int pivot = numbers[high];
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
+            if (numbers[j] < pivot) {
+                i++;
+                int temp = numbers[i];
+                numbers[i] = numbers[j];
+                numbers[j] = temp;
+            }
+        }
+        int temp = numbers[i + 1];
+        numbers[i + 1] = numbers[high];
+        numbers[high] = temp;
+        return i + 1;
+    }
+}
+
+// SortingContext.java
+public class SortingContext {
+    private SortAlgorithm sortAlgorithm;
+
+    public void setSortAlgorithm(SortAlgorithm sortAlgorithm) {
+        this.sortAlgorithm = sortAlgorithm;
+    }
+
+    public void executeSort(int[] numbers) {
+        sortAlgorithm.sort(numbers);
+    }
+}
+
+// MainApp.java
+public class MainApp {
+    public static void main(String[] args) {
+        SortingContext context = new SortingContext();
+
+        int[] numbers = {5, 2, 9, 1, 5, 6};
+
+        context.setSortAlgorithm(new BubbleSort());
+        context.executeSort(numbers);
+
+        context.setSortAlgorithm(new QuickSort());
+        context.executeSort(numbers);
+    }
+}

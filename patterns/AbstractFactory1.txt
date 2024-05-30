@@ -1,0 +1,90 @@
+// WidgetA.java
+public interface WidgetA {
+    void performTask();
+}
+
+// WidgetB.java
+public interface WidgetB {
+    void executeAction();
+}
+
+// WidgetAType1.java
+public class WidgetAType1 implements WidgetA {
+    @Override
+    public void performTask() {
+        System.out.println("Task performed by WidgetAType1");
+    }
+}
+
+// WidgetAType2.java
+public class WidgetAType2 implements WidgetA {
+    @Override
+    public void performTask() {
+        System.out.println("Task performed by WidgetAType2");
+    }
+}
+
+// WidgetBType1.java
+public class WidgetBType1 implements WidgetB {
+    @Override
+    public void executeAction() {
+        System.out.println("Action executed by WidgetBType1");
+    }
+}
+
+// WidgetBType2.java
+public class WidgetBType2 implements WidgetB {
+    @Override
+    public void executeAction() {
+        System.out.println("Action executed by WidgetBType2");
+    }
+}
+
+// Creator.java
+public interface Creator {
+    WidgetA createWidgetA();
+    WidgetB createWidgetB();
+}
+
+// CreatorType1.java
+public class CreatorType1 implements Creator {
+    @Override
+    public WidgetA createWidgetA() {
+        return new WidgetAType1();
+    }
+
+    @Override
+    public WidgetB createWidgetB() {
+        return new WidgetBType1();
+    }
+}
+
+// CreatorType2.java
+public class CreatorType2 implements Creator {
+    @Override
+    public WidgetA createWidgetA() {
+        return new WidgetAType2();
+    }
+
+    @Override
+    public WidgetB createWidgetB() {
+        return new WidgetBType2();
+    }
+}
+
+// Demo.java
+public class Demo {
+    public static void main(String[] args) {
+        Creator creator1 = new CreatorType1();
+        WidgetA widgetA1 = creator1.createWidgetA();
+        WidgetB widgetB1 = creator1.createWidgetB();
+        widgetA1.performTask();
+        widgetB1.executeAction();
+
+        Creator creator2 = new CreatorType2();
+        WidgetA widgetA2 = creator2.createWidgetA();
+        WidgetB widgetB2 = creator2.createWidgetB();
+        widgetA2.performTask();
+        widgetB2.executeAction();
+    }
+}

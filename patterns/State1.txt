@@ -1,0 +1,60 @@
+// Mode.java
+public interface Mode {
+    void executeAction();
+}
+
+// StartMode.java
+public class StartMode implements Mode {
+    @Override
+    public void executeAction() {
+        System.out.println("System is starting up.");
+    }
+}
+
+// StopMode.java
+public class StopMode implements Mode {
+    @Override
+    public void executeAction() {
+        System.out.println("System is shutting down.");
+    }
+}
+
+// MaintenanceMode.java
+public class MaintenanceMode implements Mode {
+    @Override
+    public void executeAction() {
+        System.out.println("System is in maintenance mode.");
+    }
+}
+
+// SystemController.java
+public class SystemController {
+    private Mode currentMode;
+
+    public SystemController() {
+        this.currentMode = new StartMode(); // default mode
+    }
+
+    public void changeMode(Mode mode) {
+        this.currentMode = mode;
+    }
+
+    public void performAction() {
+        currentMode.executeAction();
+    }
+}
+
+// MainApp.java
+public class MainApp {
+    public static void main(String[] args) {
+        SystemController controller = new SystemController();
+
+        controller.performAction();
+
+        controller.changeMode(new MaintenanceMode());
+        controller.performAction();
+
+        controller.changeMode(new StopMode());
+        controller.performAction();
+    }
+}
