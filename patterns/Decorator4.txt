@@ -1,0 +1,80 @@
+public class TestPaint {
+    public static void main(String[] args) {
+        Figure[] figure = new Figure[5];
+
+        figure[0] = new Cerchio();
+        figure[1] = new Rettangolo();
+
+        FiguraColorata cerchioBordoRosso = new ColoreBordo(new Cerchio(), "rosso");
+        FiguraColorata cerchioRosso = new ColoreSfondo(cerchioBordoRosso, "rosso");
+
+        figure[2] = cerchioRosso;
+
+        FiguraColorata cerchioSfondoBlu = new ColoreBordo(new Cerchio(), "blu");
+        FiguraColorata cerchioBlu = new ColoreSfondo(cerchioSfondoBlu, "blu");
+
+        figure[3] = cerchioBlu;
+
+        FiguraColorata rettangoloSfondoBlu = new ColoreSfondo(new Rettangolo(), "blu");
+
+        figure[4] = rettangoloSfondoBlu;
+
+        for (int i = 0; i < 5; i++) {
+            figure[i].disegna();
+        }
+    }
+}
+
+abstract class Figure {
+    public abstract void disegna();
+}
+
+class Cerchio extends Figure {
+    public void disegna() {
+        System.out.println("Disegna un Cerchio");
+    }
+}
+
+class Rettangolo extends Figure {
+    public void disegna() {
+        System.out.println("Disegna un Rettangolo");
+    }
+}
+
+abstract class FiguraColorata extends Figure {
+    protected Figure figura;
+
+    public FiguraColorata(Figure figura) {
+        this.figura = figura;
+    }
+
+    public abstract void disegna();
+}
+
+class ColoreBordo extends FiguraColorata {
+    private String colore;
+
+    public ColoreBordo(Figure figura, String colore) {
+        super(figura);
+        this.colore = colore;
+    }
+
+    public void disegna() {
+        figura.disegna();
+        System.out.println("Aggiunge bordo di colore: " + colore);
+    }
+}
+
+class ColoreSfondo extends FiguraColorata {
+    private String colore;
+
+    public ColoreSfondo(Figure figura, String colore) {
+        super(figura);
+        this.colore = colore;
+    }
+
+    public void disegna() {
+        figura.disegna();
+        System.out.println("Aggiunge sfondo di colore: " + colore);
+    }
+}

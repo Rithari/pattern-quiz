@@ -1,0 +1,54 @@
+public abstract class MenuElement {
+    private String name;
+    private String url;
+
+    public void add(MenuElement component) {
+        throw new UnsupportedOperationException();
+    }
+
+    public abstract void displayMenu();
+}
+
+public class MenuItem extends MenuElement {
+    public MenuItem(String name, String url) {
+        super(name, url);
+    }
+
+    public void displayMenu() {
+        System.out.println(getName() + ": " + getUrl());
+    }
+}
+
+public class Menu extends MenuElement {
+    List<MenuElement> subMenus = new ArrayList<>();
+
+    public Menu(String name, String url) {
+        super(name, url);
+    }
+
+    public void add(MenuElement menuElement) {
+        this.subMenus.add(menuElement);
+    }
+
+    public void displayMenu() {
+        System.out.println(getName() + ": " + getUrl() + "\n");
+        this.subMenus.forEach(MenuElement::displayMenu);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MenuElement allTutorials = new Menu("Tutorials", "/tutorials");
+        MenuElement spring = new Menu("Spring", "/spring");
+        MenuElement versioning = new Menu("Version Management", "/versioning");
+        MenuElement java = new MenuItem("Java", "/java");
+
+        allTutorials.add(spring);
+        allTutorials.add(versioning);
+        allTutorials.add(java);
+        spring.add(new MenuItem("Spring Core", "/core"));
+        spring.add(new MenuItem("Spring Boot", "/boot"));
+
+        allTutorials.displayMenu();
+    }
+}

@@ -1,0 +1,38 @@
+public class ScannerPerCarrello implements Scanner {
+    @Override
+    public Double scan(MerceVendutaAPeso merce) {
+        return merce.getPeso() * merce.getPrezzoAlKg();
+    }
+
+    @Override
+    public Double scan(MerceVendutaInPezzi merce) {
+        return merce.getNumeroDiPezzi() * merce.getPrezzonitario();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Merce> carrello = new ArrayList<>();
+
+        MerceVendutaInPezzi p1 = new MerceVendutaInPezzi("CO1", "Cereali", 2.30, 2);
+        MerceVendutaInPezzi p2 = new MerceVendutaInPezzi("CO2", "Quaderno", 1.10, 1);
+        MerceVendutaAPeso p3 = new MerceVendutaAPeso("CO3", "Mele", 2.50, 2.0);
+
+        carrello.add(p1);
+        carrello.add(p2);
+        carrello.add(p3);
+
+        Double totaleSpesa = calcolaTotale(carrello);
+        System.out.println("Costo totale = " + totaleSpesa + " euro");
+    }
+
+    private static Double calcolaTotale(List<Merce> carrello) {
+        Double totale = 0.0;
+        Scanner scanner = new ScannerPerCarrello();
+
+        for (Merce merce : carrello) {
+            totale += merce.accept(scanner);
+        }
+        return totale;
+    }
+}
