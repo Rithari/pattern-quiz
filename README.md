@@ -4,6 +4,19 @@ This is a simple Python application that quizzes you on different design pattern
 It randomly picks a pattern snippet from a collection of text files, displays it, and asks you to identify the pattern.
 The application runs in a loop until you terminate it with `Ctrl+C`.
 
+Included pattern snippets are:
+Abstract Factory 2x
+Composite 2x
+Adapter 1x
+State 2x
+Strategy 2x
+Visitor 2x
+Observer 2x
+Decorator 2x
+Singleton 2x
+
+Feel free to merge request additional code snippets.
+
 
 ## How to Run
 
