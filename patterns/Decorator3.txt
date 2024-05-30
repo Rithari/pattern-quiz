@@ -1,0 +1,73 @@
+public abstract class Beverage {
+    protected String description = "Unknown Beverage";
+
+    public String getDescription() {
+        return description;
+    }
+
+    public abstract double cost();
+}
+
+public class Espresso extends Beverage {
+    public Espresso() {
+        description = "Espresso";
+    }
+
+    public double cost() {
+        return 1.5;
+    }
+}
+
+public class HouseBlend extends Beverage {
+    public HouseBlend() {
+        description = "House Blend";
+    }
+
+    public double cost() {
+        return 1.0;
+    }
+}
+
+public abstract class Condiment extends Beverage {
+    public abstract String getDescription();
+}
+
+public class Mocha extends Condiment {
+    private final Beverage beverage;
+
+    public Mocha(Beverage beverage) {
+        this.beverage = beverage;
+    }
+
+    public double cost() {
+        return 0.2 + beverage.cost();
+    }
+
+    public String getDescription() {
+        return beverage.getDescription() + ", Mocha";
+    }
+}
+
+public class Whip extends Condiment {
+    private final Beverage beverage;
+
+    public Whip(Beverage beverage) {
+        this.beverage = beverage;
+    }
+
+    public double cost() {
+        return 0.1 + beverage.cost();
+    }
+
+    public String getDescription() {
+        return beverage.getDescription() + ", Whip";
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Beverage b = new Mocha(new Mocha(new Whip(new HouseBlend())));
+        System.out.println(b.getDescription());
+        System.out.println(b.cost());
+    }
+}
