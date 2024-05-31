@@ -1,6 +1,7 @@
 import os
 import random
 import time
+from collections import deque
 
 # Extrapolate the pattern name from the filename (e.g., AbstractFactory1.txt -> Abstract Factory)
 def get_pattern_from_filename(filename):
@@ -11,14 +12,27 @@ def get_pattern_from_filename(filename):
 def main():
     # Directory where pattern files are stored
     pattern_dir = 'patterns/'
+    
+    # Define the size of the cache for recently shown files
+    cache_size = 5
+    recently_shown = deque(maxlen=cache_size)
 
     try:
         while True:
             # Get a list of all .txt files in the directory
             files = [f for f in os.listdir(pattern_dir) if f.endswith('.txt')]
             
-            # Choose a random file from the list
-            chosen_file = random.choice(files)
+            # Filter out files that were recently shown
+            available_files = [f for f in files if f not in recently_shown]
+            
+            # If all files have been shown recently, reset the cache
+            if not available_files:
+                recently_shown.clear()
+                available_files = files
+            
+            # Choose a random file from the available list
+            chosen_file = random.choice(available_files)
+            recently_shown.append(chosen_file)
             full_path = os.path.join(pattern_dir, chosen_file)
             
             # Read and display the content of the file
